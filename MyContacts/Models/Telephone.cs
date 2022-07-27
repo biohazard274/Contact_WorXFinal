@@ -14,5 +14,6 @@ namespace MyContacts.Models
         public string CountryCode { get; set; }
         [Required(ErrorMessage = "The phone number is required")]
         public string PhoneNumber { get; set; }
+        public bool PrimaryNumber { get; set; }
     }
 }

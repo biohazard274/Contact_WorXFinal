@@ -1,0 +1,6 @@
+C:\Projects\Contact_WorXFinal\MyContactsTests\bin\Debug\net5.0\CoverletSourceRootsMapping
+C:\Projects\Contact_WorXFinal\MyContactsTests\obj\Debug\net5.0\MyContactsTests.csproj.AssemblyReference.cache
+C:\Projects\Contact_WorXFinal\MyContactsTests\obj\Debug\net5.0\MyContactsTests.GeneratedMSBuildEditorConfig.editorconfig
+C:\Projects\Contact_WorXFinal\MyContactsTests\obj\Debug\net5.0\MyContactsTests.AssemblyInfoInputs.cache
+C:\Projects\Contact_WorXFinal\MyContactsTests\obj\Debug\net5.0\MyContactsTests.AssemblyInfo.cs
+C:\Projects\Contact_WorXFinal\MyContactsTests\obj\Debug\net5.0\MyContactsTests.csproj.CoreCompileInputs.cache
