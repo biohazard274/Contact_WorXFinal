@@ -4,12 +4,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - MyContacts</title>
-    <link rel="stylesheet" href="~/css/Layout.css" />
 
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/jquery.toolbar.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link rel="stylesheet" href="~/css/webpixels.css" />
-
+    <link rel="stylesheet" href="~/css/Layout.css" />
+    <link rel="stylesheet" href="~/lib/limonte-sweetalert2/sweetalert2.css"/>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 </head>
 
 
@@ -33,15 +35,11 @@
         </div>
         <div class="col-1 gx-0 p-2">
             <div class="btn-group-sm">
-                <a  class="btn border shadow data-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="btn border shadow data-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="bi bi-gear text-blue-400 text-lg "></i>
                 </a>
                 <ul class="dropdown-menu bg-surface-tertiary">
-                    <li><a class="dropdown-item" style="cursor: pointer" onclick="PopupPracInfo()">Practice Information</a></li>
-                    <li><a class="dropdown-item" style="cursor: pointer" onclick="PopupSettings()">My Preferences</a></li>
-                    <li><a class="dropdown-item" style="cursor: pointer" onclick="PopupAddons()">Addons</a></li>
-                    <li><a class="dropdown-item" style="cursor: pointer" onclick="PopupUserAdmin()">User Admin</a></li>
-                    <li><a class="dropdown-item" style="cursor: pointer" onclick="PopupMainSettings()">Settings</a></li>
+                    <li><a class="dropdown-item" style="cursor: pointer" onclick="PopUpSettings()">My Settings</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item">Get Help</a></li>
                 </ul>
@@ -55,11 +53,11 @@
             <div class="text-center mb-2" style="margin-left: 1rem; height: 50px">
             </div>
             <div class="nav_list">
-                <a asp-area="Admin" asp-controller="Assistant" id="assit" asp-action="Index" class="nav_link-menu a-nav "> <i class='bi bi-columns-gap nav_icon'></i> <span class="nav_name" data-bs-toggle="popover" data-bs-placement="top" data-bs-trigger="hover focus" data-bs-content="Disabled popover">VetMaster Assistant</span> </a>
-
-
+                <a class="nav_link-menu a-nav " onclick="newContactModal()"> <i class='bx bxs-add-to-queue nav_icon'></i> <span class="nav_name">Add Contact</span> </a>
+                <a class="nav_link-menu a-nav "> <i class='bx bxs-file-export nav_icon'></i> <span class="nav_name">Export Contacts</span> </a>
             </div>
         </div>
+
         <a asp-controller="User" asp-action="Logout" class="nav_link-menu"> <i class='bx bx-log-out nav_icon'></i> <span class="nav_name">SignOut</span> </a>
     </nav>
 </div>
@@ -68,11 +66,17 @@
     <div id="placeholderLayout"></div>
     @RenderBody()
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <script src="https://kit.fontawesome.com/3ea4c24e03.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/jquery.toolbar.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-<script src="~/js/site.js" asp-append-version="true"></script>
-<script src="~/js/Global.js" asp-append-version="true"></script>
+<script src="~/js/site.js"></script>
+<script src="~/js/Home.js"></script>
+<script src="~/js/Global.js"></script>
+<script src="~/lib/limonte-sweetalert2/sweetalert2.all.js"></script>
+
 @await RenderSectionAsync("Scripts", required: false)
 

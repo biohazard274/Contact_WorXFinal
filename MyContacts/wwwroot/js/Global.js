@@ -10,8 +10,18 @@ $(document).ready(function () {
     $(this).keypress(function (e) {
         idleTime = 0;
     });
-
+    
 });
+
+function showModal(modalData) {
+    var placeHolderElement = $('#placeholderLayout');
+    placeHolderElement.find('.modal').modal('dispose')
+    placeHolderElement.html(modalData);
+    placeHolderElement.find('.modal').modal('show')
+    placeHolderElement.find('.modal').on('show', function () {
+        $(document).off('focusin.modal');
+    })
+}
 
 function timerIncrement() {
     idleTime = idleTime + 1;
