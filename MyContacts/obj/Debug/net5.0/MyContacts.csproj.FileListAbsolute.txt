@@ -1322,3 +1322,6 @@ C:\Projects\Contact_WorXFinal\MyContacts\obj\Debug\net5.0\MyContacts.pdb
 C:\Projects\Contact_WorXFinal\MyContacts\obj\Debug\net5.0\MyContacts.genruntimeconfig.cache
 D:\MyContacts\MyContacts\obj\Debug\net5.0\Razor\Views\Contact\AddContact.cshtml.g.cs
 D:\MyContacts\MyContacts\obj\Debug\net5.0\Razor\Views\Contact\AddAddress.cshtml.g.cs
+C:\Projects\Contact_WorXFinal\MyContacts\obj\Debug\net5.0\Razor\Views\Contact\AddAddress.cshtml.g.cs
+C:\Projects\Contact_WorXFinal\MyContacts\obj\Debug\net5.0\Razor\Views\Contact\AddContact.cshtml.g.cs
+C:\Projects\Contact_WorXFinal\MyContacts\obj\Debug\net5.0\Razor\Views\Contact\AddPhone.cshtml.g.cs

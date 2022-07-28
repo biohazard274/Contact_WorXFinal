@@ -1,40 +1,39 @@
 ﻿@model MyContacts.Models.Address
 
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"  aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-md">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
         <div class="modal-content">
             <button type="button" class="btn-close position-absolute right-2 top-2" data-bs-dismiss="modal" aria-label="Close"></button>
-            <div class="row p-4 text-center">
-                <h2 class="font-weight-bold text-xl">Create a new contact</h2>
-                <div class="col-md-3 border-right">
-                    <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-                        <img src="https://cdn.worldvectorlogo.com/logos/contacts-ios.svg" alt="img" width="120" />
-                    </div>
-                </div>
-
-                <div class="col-md-9">
+            <div class="row p-4 ">
+                <h2 class="font-weight-bold text-center text-xl">Create a new contact</h2>
+                <div class="col">
                     <div class="card mt-2 shadow">
-                        <p class="font-weight-bold my-1 text-muted text-md">Contact Info</p>
+                        <p class="font-weight-bold my-1 text-muted text-center text-md">Contact Info</p>
                         <form>
                             <input asp-for="Contact.Id" hidden />
-
-                            <div class="p-3 pt-0">
-                                <div class="row m-3">
-                                    <div class="row my-2">
-                                        <select asp-for="Country" id="country"  class='form-control'><option value="">Select a country</option></select>
+                            <input asp-for="Contact.FirstName" hidden />
+                                   <input asp-for="Contact.LastName" hidden />
+                            
+                                <div class="row ml-3 ">
+                                    <div class="row form-floating my-2">
+                                        <select asp-for="Country" id="country" class='form-select'><option value="">Select a country</option></select>
+                                        <label for="country">Contact's Country</label>
                                     </div>
-                                    <div class="row my-2">
-                                        <select asp-for="State" id="region" class="form-control"><option value="">Select a state</option></select>
+                                    <div class="row form-floating my-2">
+                                        <select asp-for="State" id="region" class="form-select"><option value="">Select a state</option></select>
+                                        <label for="region">Contact's State</label>
                                     </div>
-                                    <div class="row my-2">
-                                        <select asp-for="City" data-live-search="true" id="city" class='form-control'><option value="">Select a city</option></select>
+                                    <div class="row form-floating my-2">
+                                        <select asp-for="City" id="city" class='form-select'><option value="">Select a city</option></select>
+                                        <label for="city">Contact's City</label>
                                     </div>
-                                    <div class="row my-2">
-                                        <input asp-for="StreetAddress" class='form-control' placeholder="3 Dream str"/>
+                                    <div class="row form-floating my-2">
+                                        <input asp-for="StreetAddress" id="floatingStreetName" class='form-control' placeholder="3 Dream str" />
+                                        <label for="floatingStreetName">Contact's Street Address</label>
 
                                     </div>
                                 </div>
-                            </div>
+
                         </form>
                     </div>
                 </div>
@@ -43,6 +42,3 @@
         </div>
     </div>
 </div>
-<script src="~/js/GetCountryData.js">
-    
-</script>

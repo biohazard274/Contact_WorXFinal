@@ -94,6 +94,12 @@ function getCountries(token) {
         headers: {
             "Accept": "application/json",
             "Authorization": "Bearer " + token,
+        },
+        success: function (data) {
+            console.log(data)
+        },
+        errorfunction(data) {
+            document.reload()
         }
     }).done(function (data) {
         $("#country option").remove();
@@ -102,9 +108,6 @@ function getCountries(token) {
             $("#country").append(
                 '<option value="' + this.country_name + '">' + this.country_name + "</option>"
             );
-            console.log(this.country_name)
         })
-        
     });
-
 }

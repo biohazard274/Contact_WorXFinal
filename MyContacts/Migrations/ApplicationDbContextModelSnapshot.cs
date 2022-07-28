@@ -26,23 +26,28 @@ namespace MyContacts.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("PhyscalLine1")
+                    b.Property<string>("City")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PhyscalLine2")
+                    b.Property<int?>("ContactID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Country")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PhyscalLine3")
+                    b.Property<string>("State")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PhyscalLine4")
+                    b.Property<string>("StreetAddress")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ContactID");
 
                     b.ToTable("Addresses");
                 });
@@ -116,6 +121,9 @@ namespace MyContacts.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("ContactID")
+                        .HasColumnType("int");
+
                     b.Property<string>("CountryCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -124,7 +132,12 @@ namespace MyContacts.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("PrimaryNumber")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ContactID");
 
                     b.ToTable("Telephones");
                 });
@@ -168,6 +181,15 @@ namespace MyContacts.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("MyContacts.Models.Address", b =>
+                {
+                    b.HasOne("MyContacts.Models.Contact", "Contact")
+                        .WithMany()
+                        .HasForeignKey("ContactID");
+
+                    b.Navigation("Contact");
+                });
+
             modelBuilder.Entity("MyContacts.Models.Setting", b =>
                 {
                     b.HasOne("MyContacts.Models.User", "User")
@@ -177,6 +199,15 @@ namespace MyContacts.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("MyContacts.Models.Telephone", b =>
+                {
+                    b.HasOne("MyContacts.Models.Contact", "Contact")
+                        .WithMany()
+                        .HasForeignKey("ContactID");
+
+                    b.Navigation("Contact");
                 });
 #pragma warning restore 612, 618
         }

@@ -9,6 +9,8 @@ namespace MyContacts.Models
         [Required(ErrorMessage = "Id is required")]
         public int Id { get; set; }
 
+        [ForeignKey("ContactID")]
+        public Contact Contact { get; set; }
         [Required(ErrorMessage = "The phone number's country code is required")]
         [ForeignKey("CountryCodeID")]
         public string CountryCode { get; set; }

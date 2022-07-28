@@ -86,6 +86,7 @@ namespace MyContacts.Controllers
         {
             try
             {
+                address.Contact = _db.Contacts.FirstOrDefault(x => x.Id == address.Contact.Id);
                 if (ModelState.IsValid)
                 {
                     try
@@ -94,7 +95,7 @@ namespace MyContacts.Controllers
                         if (_db.ChangeTracker.HasChanges())
                         {
                             var result = await _db.SaveChangesAsync();
-                            return Json(new { success = true });
+                            return Json(new { success = true, contactID = address.Contact.Id });
                         }
                         else
                             return Json(new { success = false, message = "No changes to be made" });
@@ -121,6 +122,13 @@ namespace MyContacts.Controllers
             {
                 return Json(new { success = false, message = er.Message + "<br>" + er.InnerException });
             }
+        }
+        [HttpGet]
+        public IActionResult AddPhone(int contactID)
+        {
+            var telephone = new Telephone();
+            telephone.Contact = _db.Contacts.FirstOrDefault(x => x.Id == contactID);
+            return PartialView("AddPhone", telephone);
         }
     }
 }
