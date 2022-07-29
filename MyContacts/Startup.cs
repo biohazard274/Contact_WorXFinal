@@ -66,7 +66,12 @@ namespace MyContacts
             app.UseAuthorization();
 
             app.UseSession();
-           
+            app.UseCors(x => x
+                 .AllowAnyMethod()
+                 .AllowAnyHeader()
+                 .SetIsOriginAllowed(origin => true) // allow any origin
+                 .AllowCredentials()); // allow credentials
+            // Add MVC to the request pipeline.
 
             app.UseEndpoints(endpoints =>
             {

@@ -19,5 +19,17 @@ namespace MyContacts.Models
         public DateTime DateOfBirth { get; set; }
         [Required(ErrorMessage = "Your contact's dage is required")]
         public int age { get; set; }
+
+        
+        public bool validAge(int age)
+        {
+            if (age <= 0)
+            {
+                throw new ArgumentException("Not a valid age");
+            }
+            else
+                return true;
+
+        }
     }
 }

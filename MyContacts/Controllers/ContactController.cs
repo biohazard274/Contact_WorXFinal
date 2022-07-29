@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MyContacts.Data;
 using MyContacts.Models;
+using MyContacts.Models.NewFolder;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -129,6 +132,99 @@ namespace MyContacts.Controllers
             var telephone = new Telephone();
             telephone.Contact = _db.Contacts.FirstOrDefault(x => x.Id == contactID);
             return PartialView("AddPhone", telephone);
+        }
+        [HttpPost]
+        [HttpPost]
+        public async Task<IActionResult> SaveNumber(Telephone telephone)
+        {
+            try
+            {
+                telephone.Contact = _db.Contacts.FirstOrDefault(x => x.Id == telephone.Contact.Id);
+                if (ModelState.IsValid)
+                {
+                    try
+                    {
+                        _db.Telephones.Add(telephone);
+                        if (_db.ChangeTracker.HasChanges())
+                        {
+                            var result = await _db.SaveChangesAsync();
+                            return Json(new { success = true, contactID = telephone.Contact.Id, message = telephone.Contact.FirstName+" "+telephone.Contact.LastName+" has been saved"  });
+                        }
+                        else
+                            return Json(new { success = false, message = "No changes to be made" });
+                    }
+                    catch (Exception er)
+                    {
+                        return Json(new { success = false, message = er.Message + "<br>" + er.InnerException });
+                    }
+                }
+                else
+                {
+                    var reply = "";
+                    var errors = ModelState.Select(x => x.Value.Errors)
+                                           .Where(y => y.Count > 0)
+                                           .ToList();
+                    foreach (var error in errors)
+                    {
+                        reply += error[0].ErrorMessage + "<br>";
+                    }
+                    return Json(new { success = false, message = reply });
+                }
+            }
+            catch (Exception er)
+            {
+                return Json(new { success = false, message = er.Message + "<br>" + er.InnerException });
+            }
+        }
+
+
+        [HttpGet]
+        public IActionResult getAllContacts()
+        {
+            try
+            {
+                var returnContacts = new List<ContactViewModel>();
+
+                var contacts = _db.Contacts.ToList();
+
+                foreach (var contact in contacts)
+                {
+                    var contactViewModelToAdd = new ContactViewModel()
+                    {
+                        Contact = contact,
+                        Telephones = _db.Telephones.Where(x => x.Contact == contact).ToList(),
+                        Address = _db.Addresses.Where(x => x.Contact == contact).SingleOrDefault()
+                    };
+                   
+                    returnContacts.Add(contactViewModelToAdd);
+                }
+                return Json(new {success = true, data =  returnContacts });
+
+            }
+            catch (Exception er)
+            {
+                return Json(new { success = false, data = er.Message + "<br>" + er.InnerException });
+
+            }
+        }
+        [HttpGet]
+        public IActionResult UpdateContact(int contactID)
+        {
+            try
+            {
+                var returnContact = new ContactViewModel()
+                {
+                    Contact = _db.Contacts.FirstOrDefault(x => x.Id == contactID),
+                    Telephones = _db.Telephones.Where(x => x.Contact.Id == contactID).ToList(),
+                    Address = _db.Addresses.FirstOrDefault(x => x.Contact.Id == contactID)
+                };
+                return PartialView("AddPhone", returnContact);
+            }
+            catch (Exception er)
+            {
+                return Json(new { success = false, data = er.Message + "<br>" + er.InnerException });
+
+            }
         }
     }
 }

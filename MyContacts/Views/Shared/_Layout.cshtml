@@ -25,7 +25,7 @@
         <div class="col gx-0 p-2 text-center">
             <div class="container">
                 <div class="relative">
-                    <input type="text" class="h-9 w-lg-96 pr-8 bg-white shadow text-dark pl-5 rounded z-0 focus:shadow focus:outline-none" placeholder="Search anything...">
+                    <input type="text" id="mySearch" class="h-9 w-lg-96 pr-8 bg-white shadow text-dark pl-5 rounded z-0 focus:shadow focus:outline-none" placeholder="Search anything...">
                     <div class="absolute top-2.5 right-7">
                         <i class="fa fa-search text-blue-400 z-20 hover:text-gray-500"></i>
                     </div>
@@ -77,7 +77,6 @@
 <script src="~/js/Home.js"></script>
 <script src="~/js/Global.js"></script>
 <script src="~/lib/limonte-sweetalert2/sweetalert2.all.js"></script>
-<script src="~/js/GetCountryData.js"></script>
 
 @await RenderSectionAsync("Scripts", required: false)
 
