@@ -64,6 +64,8 @@ namespace MyContacts.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Telephones", x => x.Id);
+
+                    
                 });
 
             migrationBuilder.CreateTable(

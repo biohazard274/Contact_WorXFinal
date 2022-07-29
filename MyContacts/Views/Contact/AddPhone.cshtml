@@ -3,9 +3,9 @@
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-md">
         <div class="modal-content">
-            <button type="button" class="btn-close position-absolute right-2 top-2" data-bs-dismiss="modal" aria-label="Close"></button>
+            <button type="button" class="btn-close position-absolute right-2 top-2" onclick="hideModal()" aria-label="Close"></button>
             <div class="row p-4 text-center">
-                <h2 class="font-weight-bold text-xl">Create a new contact</h2>
+                <h2 class="font-weight-bold text-xl">Create a new phone number</h2>
                 <div class="col">
                     <div class="card mt-2 shadow">
                         <p class="font-weight-bold my-1 text-muted text-md">Contact Info</p>
@@ -13,14 +13,17 @@
                             <input asp-for="Contact.Id" hidden />
                             <input asp-for="Contact.FirstName" hidden />
                             <input asp-for="Contact.LastName" hidden />
-                            <input asp-for="CountryCode" hidden />
                             <input asp-for="PrimaryNumber" type="checkbox" checked hidden />
-                            <div class="input-group mb-3">
-                                <span class="input-group-text" id="code">+27</span>
-                                <div class="form-floating">
-                                    <input type="text" class="form-control" id="floatingInputGroup1" placeholder="Username">
-                                    <label for="floatingInputGroup1">Contact Number</label>
+                            <div class="row ml-3 ">
+                                <div class="col-6 mx-1 form-floating my-2">
+                                    <select asp-for="CountryCode" id="country" class='form-select'></select>
+                                    <label for="country">Country Code</label>
                                 </div>
+                                <div class="col mx-1 form-floating my-2">
+                                    <input asp-for="PhoneNumber" id="region" class="form-control" placeholder="0832522897"/>
+                                    <label for="region">Phone Number</label>
+                                </div>
+                                
                             </div>
                         </form>
                     </div>
@@ -30,3 +33,4 @@
         </div>
     </div>
 </div>
+<script src="~/js/codeLookup.js"></script>

@@ -77,11 +77,62 @@ namespace MyContacts.Controllers
 
 
         }
+        [HttpDelete]
+        public async Task DeleteContact(int contactID)
+        {
+            try
+            {
+                var contact = _db.Contacts.FirstOrDefault(x => x.Id == contactID);
+                var addresses = _db.Addresses.Where(x => x.Contact == contact).ToList();
+                foreach (var address in addresses)
+                {
+                    _db.Addresses.Remove(address);
+                    if (_db.ChangeTracker.HasChanges())
+                    {
+                        var result = await _db.SaveChangesAsync();
+                    }
+                }
+
+                var telephones = _db.Telephones.Where(x => x.Contact == contact).ToList();
+                foreach (var number in telephones)
+                {
+                    _db.Telephones.Remove(number);
+                    if (_db.ChangeTracker.HasChanges())
+                    {
+                        var result = await _db.SaveChangesAsync();
+                    }
+                }
+
+                try
+                {
+                    _db.Contacts.Remove(contact);
+                    if (_db.ChangeTracker.HasChanges())
+                    {
+                        var result = await _db.SaveChangesAsync();
+                        return;
+                    }
+
+                }
+                catch (Exception)
+                {
+                    throw new Exception();
+
+                }
+
+
+            }
+            catch (Exception)
+            {
+                throw new Exception();
+            }
+
+
+        }
         [HttpGet]
         public IActionResult AddAddress(int contactID)
         {
             var address = new Address();
-            address.Contact =  _db.Contacts.FirstOrDefault(x =>x.Id == contactID);
+            address.Contact = _db.Contacts.FirstOrDefault(x => x.Id == contactID);
             return PartialView("AddAddress", address);
         }
         [HttpPost]
@@ -148,7 +199,7 @@ namespace MyContacts.Controllers
                         if (_db.ChangeTracker.HasChanges())
                         {
                             var result = await _db.SaveChangesAsync();
-                            return Json(new { success = true, contactID = telephone.Contact.Id, message = telephone.Contact.FirstName+" "+telephone.Contact.LastName+" has been saved"  });
+                            return Json(new { success = true, contactID = telephone.Contact.Id, message = telephone.Contact.FirstName + " " + telephone.Contact.LastName + " has been saved" });
                         }
                         else
                             return Json(new { success = false, message = "No changes to be made" });
@@ -195,10 +246,10 @@ namespace MyContacts.Controllers
                         Telephones = _db.Telephones.Where(x => x.Contact == contact).ToList(),
                         Address = _db.Addresses.Where(x => x.Contact == contact).SingleOrDefault()
                     };
-                   
+
                     returnContacts.Add(contactViewModelToAdd);
                 }
-                return Json(new {success = true, data =  returnContacts });
+                return Json(new { success = true, data = returnContacts });
 
             }
             catch (Exception er)
@@ -218,7 +269,7 @@ namespace MyContacts.Controllers
                     Telephones = _db.Telephones.Where(x => x.Contact.Id == contactID).ToList(),
                     Address = _db.Addresses.FirstOrDefault(x => x.Contact.Id == contactID)
                 };
-                return PartialView("AddPhone", returnContact);
+                return PartialView("UpdateContact", returnContact);
             }
             catch (Exception er)
             {

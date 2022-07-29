@@ -1,5 +1,11 @@
-﻿$(document).ready(function () {
+﻿$(document).ajaxError(function () {
 
+});
+$(document).ready(function () {
+    generateToken()
+    
+});
+function generateToken() {
     var authToken;
     //-------------------------------Get Token-------------------------//
     var selectedCountry = (selectedRegion = selectedCity = "");
@@ -81,13 +87,15 @@
         });
     });
 
-});
+}
+
+
 
 function getCountries(token) {
     $("#country option").remove();
     $('country').append('<option value="">Loading options</option>');
     var url = "https://www.universal-tutorial.com/api/countries/";
-
+   
     $.ajax({
         type: 'GET',
         url: url,
@@ -96,13 +104,13 @@ function getCountries(token) {
             "Authorization": "Bearer " + token,
         }
     }).done(function (data) {
+        console.log(data)
         $("#country option").remove();
         $('country ').append('<option value="">Please a country</option>');
         $.each(data, function () {
             $("#country").append(
                 '<option value="' + this.country_name + '">' + this.country_name + "</option>"
             );
-            console.log(this.country_name)
         })
 
     });

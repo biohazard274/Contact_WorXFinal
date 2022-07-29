@@ -1327,3 +1327,4 @@ C:\Projects\Contact_WorXFinal\MyContacts\obj\Debug\net5.0\Razor\Views\Contact\Ad
 C:\Projects\Contact_WorXFinal\MyContacts\obj\Debug\net5.0\Razor\Views\Contact\AddPhone.cshtml.g.cs
 D:\MyContacts\MyContacts\obj\Debug\net5.0\Razor\Views\Contact\AddPhone.cshtml.g.cs
 D:\MyContacts\MyContacts\obj\Debug\net5.0\Razor\Views\Contact\UpdateContact.cshtml.g.cs
+C:\Projects\Contact_WorXFinal\MyContacts\obj\Debug\net5.0\Razor\Views\Contact\UpdateContact.cshtml.g.cs

@@ -1,5 +1,8 @@
 ﻿var idleTime = 0;
+
+
 $(document).ready(function () {
+    
     // Increment the idle time counter every minute.
     var idleInterval = setInterval(timerIncrement, 60000); // 1 minute
 
