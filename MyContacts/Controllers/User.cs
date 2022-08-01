@@ -75,5 +75,9 @@ namespace MyContacts.Controllers
             HttpContext.Session.Clear();
             return View("Login");
         }
+        public IActionResult Forbidden()
+        {
+            return View();
+        }
     }
 }

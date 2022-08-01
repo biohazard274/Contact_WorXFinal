@@ -1,53 +1,82 @@
 ﻿@model MyContacts.Models.NewFolder.ContactViewModel
 
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-dialog modal-dialog-centered modal-md">
         <div class="modal-content">
             <button type="button" class="btn-close position-absolute right-2 top-2" data-bs-dismiss="modal" aria-label="Close"></button>
             <div class="row p-4 ">
-                <h2 class="font-weight-bold text-center text-xl">Create a new contact</h2>
-                <div class="col">
-                    <div class="card px-2 mt-2 shadow">
-                        <p class="font-weight-bold my-1 text-muted text-center text-md">Contact Info</p>
-                        <form>
-                            <div class="row mt-1">
-                                <div class="col form-floating">
-                                    <input asp-for="Contact.FirstName" type="text" class="form-control" id="floatingFirstName" placeholder="John">
-                                    <label for="floatingFirstName">Contact's First Name</label>
-                                </div>
-                                <div class="col form-floating">
-                                    <input asp-for="Contact.LastName" type="text" class="form-control" id="floatingLastName" placeholder="John">
-                                    <label for="floatingLastName">Contact's Last Name</label>
-                                </div>
+                <h2 class="font-weight-bold text-center text-xl">@Model.Contact.FirstName @Model.Contact.LastName</h2>
+                <div class="mt-sm-3 text-center">
+                    <button type="button" class="btn btn-sm  rounded btn-outline-danger w-60" aria-label="Close" onclick="deleteContact(@Model.Contact.Id)">Delele this contact <i class="fa fa-trash" aria-hidden="true"></i></button>
+                </div> 
+
+                <div class="col-xs-12">
+                    <div class="card pb-4 pl-3 text-muted px-2 mt-2 shadow">
+
+                                                <p class="font-weight-bold my-1 text-muted text-center text-md">Contact Info</p>
+
+                        <div class = "row">
+
+                            @{
+                                var daysToBday = (Model.Contact.DateOfBirth.AddYears(@Model.Contact.age + 1) - DateTime.Now).TotalDays;
+                            }
+                            <div class="col">
+                                <p>First Name: @Model.Contact.FirstName</p>
+                                <p>Last Name: @Model.Contact.LastName</p>
+                                <p>Date of Birth: @Model.Contact.DateOfBirth.ToShortDateString()</p>
                             </div>
-                            <div class="row mt-2">
-                                <div class="col">
-                                    <input class="form-control text-center" asp-for="Contact.DateOfBirth" type="date" data-dd-opt-custom-class="dd-theme-dd-theme-bootstrap">
-                                </div>
+                            <div class="col">
+                                <p>Age: @Model.Contact.age</p>
+                                <p>Next Birthday: @Model.Contact.DateOfBirth.AddYears(@Model.Contact.age + 1).ToShortDateString()</p>
+                                <p>Next Birthday in: @daysToBday.ToString("0") days </p>
                             </div>
-
-                            <div class="row ml-3 ">
-
-                                <div class="row form-floating my-2">
-                                    <input asp-for="Address.StreetAddress" id="floatingStreetName" class='form-control' placeholder="3 Dream str" />
-                                    <label for="floatingStreetName">Contact's Street Address</label>
-
-                                </div>
-                            </div>
-
-                        </form>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-primary position-absolute right-2 top-2 w-15 p-1 px-2" onclick="EditContact(@Model.Contact.Id)" aria-label="Close" >Edit</button>
                     </div>
                 </div>
-                <div class="mt-sm-3 text-right"><button class="btn btn-primary profile-button" data-save="NewAddress" type="button">Save</button></div>
+                <div class="col-xs-12">
+                    <div class="card pb-4 pl-3 text-muted px-2 mt-2 shadow">
+                                                <p class="font-weight-bold my-1 text-muted text-center text-md">Address</p>
+
+                        <div class = "row">
+
+
+                            <div class="col">
+                                <p>Country: @Model.Address.Country</p>
+                                <p>State: @Model.Address.State</p>
+                            </div>
+                            <div class="col">
+                                <p>City: @Model.Address.City</p>
+                                <p>Street Address: @Model.Address.StreetAddress</p>
+                                
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-primary position-absolute right-2 top-2 w-15 p-1 px-2" onclick="EditAddress(@Model.Contact.Id)" aria-label="Close" >Edit</button>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="card pb-4 pl-3 text-muted px-2 mt-2 shadow">
+                                                <p class="font-weight-bold my-1 text-muted text-center text-md">Address</p>
+
+                        <div class = "row">
+
+
+                            <div class="col">
+                                <p>Country: @Model.Address.Country</p>
+                                <p>State: @Model.Address.State</p>
+                            </div>
+                            <div class="col">
+                                <p>City: @Model.Address.City</p>
+                                <p>Street Address: @Model.Address.StreetAddress</p>
+                                
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-primary position-absolute right-2 top-2 w-15 p-1 px-2" onclick="EditAddress(@Model.Contact.Id)" aria-label="Close" >Edit</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
-<script>
-    new dateDropper({
-        selector: 'input[type="date"]',
-        customClass: 'dd-theme-dd-theme-bootstrap',
-        autoFill: false
-    });
-</script>
+<script src="/js/UpdateContact.js"></script>
 <script src="~/js/GetCountryData.js"></script>

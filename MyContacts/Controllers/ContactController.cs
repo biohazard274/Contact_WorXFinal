@@ -24,6 +24,58 @@ namespace MyContacts.Controllers
         {
             var contact = new Contact();
             return PartialView("AddContact", contact);
+
+        }
+        [HttpGet]
+        public IActionResult EditContact(int contactID)
+        {
+            var contact = _db.Contacts.FirstOrDefault(x => x.Id == contactID);
+            return PartialView("EditContact", contact);
+        }
+        [HttpPost]
+        public async Task<IActionResult> UpdateContact(Contact contact)
+        {
+            try
+            {
+                contact.age = DateTime.Now.Year - contact.DateOfBirth.Year;
+                if (ModelState.IsValid)
+                {
+                    try
+                    {
+                        _db.Contacts.Update(contact);
+                        if (_db.ChangeTracker.HasChanges())
+                        {
+                            var result = await _db.SaveChangesAsync();
+                            return Json(new { success = true, contactID = contact.Id, message = contact.FirstName + " " + contact.LastName + " was Updated Successfully" }); ;
+                        }
+                        else
+                            return Json(new { success = false, message = "No changes to be made" });
+                    }
+                    catch (Exception er)
+                    {
+                        return Json(new { success = false, message = er.Message + "<br>" + er.InnerException });
+                    }
+                }
+                else
+                {
+                    var reply = "";
+                    var errors = ModelState.Select(x => x.Value.Errors)
+                                           .Where(y => y.Count > 0)
+                                           .ToList();
+                    foreach (var error in errors)
+                    {
+                        reply += error[0].ErrorMessage + "<br>";
+                    }
+                    return Json(new { success = false, message = reply });
+                }
+
+            }
+            catch (Exception er)
+            {
+                return Json(new { success = false, message = er.Message + "<br>" + er.InnerException });
+            }
+
+
         }
         [HttpPost]
         public async Task<IActionResult> SaveContact(Contact contact)
@@ -77,8 +129,52 @@ namespace MyContacts.Controllers
 
 
         }
+        [HttpPost]
+        public async Task<IActionResult> CreateNewContact(Contact contact)
+        {
+            try
+            {
+                    contact.age = DateTime.Now.Year - contact.DateOfBirth.Year;
+                    if (ModelState.IsValid)
+                    {
+                        try
+                        {
+                            _db.Contacts.Add(contact);
+                            if (_db.ChangeTracker.HasChanges())
+                            {
+                                var result = await _db.SaveChangesAsync();
+                                return Json(new { success = true, newContact = true, contactID = contact.Id, message = contact.FirstName + " " + contact.LastName + " was Added Successfully" }); ;
+                            }
+                            else
+                                return Json(new { success = false, message = "No changes to be made" });
+                        }
+                        catch (Exception er)
+                        {
+                            return Json(new { success = false, message = er.Message + "<br>" + er.InnerException });
+                        }
+                    }
+                    else
+                    {
+                        var reply = "";
+                        var errors = ModelState.Select(x => x.Value.Errors)
+                                               .Where(y => y.Count > 0)
+                                               .ToList();
+                        foreach (var error in errors)
+                        {
+                            reply += error[0].ErrorMessage + "<br>";
+                        }
+                        return Json(new { success = false, message = reply });
+                    }
+            }
+            catch (Exception er)
+            {
+                return Json(new { success = false, message = er.Message + "<br>" + er.InnerException });
+            }
+
+
+        }
         [HttpDelete]
-        public async Task DeleteContact(int contactID)
+        public async Task<IActionResult> DeleteContact(int contactID, bool fromUpdate)
         {
             try
             {
@@ -109,23 +205,27 @@ namespace MyContacts.Controllers
                     if (_db.ChangeTracker.HasChanges())
                     {
                         var result = await _db.SaveChangesAsync();
-                        return;
+                        ViewBag.Message = String.Format("Hello{0}.\\ncurrent Date and time:{1}", "Brandon", DateTime.Now.ToString());
+                        return Json(new { success = true, message = "Contact Deleted" });
                     }
 
                 }
-                catch (Exception)
+                catch (Exception er)
                 {
-                    throw new Exception();
+                    ViewBag.Message = er.Message;
+
+                    return View("Index");
 
                 }
-
-
             }
-            catch (Exception)
+            catch (Exception er)
             {
-                throw new Exception();
-            }
+                ViewBag.Message = er.Message;
 
+                return View("Index");
+
+            }
+            return View("Index");
 
         }
         [HttpGet]
@@ -135,6 +235,13 @@ namespace MyContacts.Controllers
             address.Contact = _db.Contacts.FirstOrDefault(x => x.Id == contactID);
             return PartialView("AddAddress", address);
         }
+        [HttpGet]
+        public IActionResult EditAddress(int contactID)
+        {
+            var address = _db.Addresses.Include(x => x.Contact).FirstOrDefault(x => x.Contact.Id == contactID);
+            return PartialView("EditAddress", address);
+        }
+
         [HttpPost]
         public async Task<IActionResult> SaveAddress(Address address)
         {
@@ -177,6 +284,47 @@ namespace MyContacts.Controllers
                 return Json(new { success = false, message = er.Message + "<br>" + er.InnerException });
             }
         }
+        [HttpPost]
+        public async Task<IActionResult> UpdateAddress(Address address)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    try
+                    {
+                        _db.Addresses.Update(address);
+                        if (_db.ChangeTracker.HasChanges())
+                        {
+                            var result = await _db.SaveChangesAsync();
+                            return Json(new { success = true, contactID = address.Contact.Id });
+                        }
+                        else
+                            return Json(new { success = false, message = "No changes to be made" });
+                    }
+                    catch (Exception er)
+                    {
+                        return Json(new { success = false, message = er.Message + "<br>" + er.InnerException });
+                    }
+                }
+                else
+                {
+                    var reply = "";
+                    var errors = ModelState.Select(x => x.Value.Errors)
+                                           .Where(y => y.Count > 0)
+                                           .ToList();
+                    foreach (var error in errors)
+                    {
+                        reply += error[0].ErrorMessage + "<br>";
+                    }
+                    return Json(new { success = false, message = reply });
+                }
+            }
+            catch (Exception er)
+            {
+                return Json(new { success = false, message = er.Message + "<br>" + er.InnerException });
+            }
+        }
         [HttpGet]
         public IActionResult AddPhone(int contactID)
         {
@@ -184,7 +332,13 @@ namespace MyContacts.Controllers
             telephone.Contact = _db.Contacts.FirstOrDefault(x => x.Id == contactID);
             return PartialView("AddPhone", telephone);
         }
-        [HttpPost]
+        [HttpGet]
+        public IActionResult AddPhoneExisting(int contactID)
+        {
+            var telephone = new Telephone();
+            telephone.Contact = _db.Contacts.FirstOrDefault(x => x.Id == contactID);
+            return PartialView("AddPhone", telephone);
+        }
         [HttpPost]
         public async Task<IActionResult> SaveNumber(Telephone telephone)
         {

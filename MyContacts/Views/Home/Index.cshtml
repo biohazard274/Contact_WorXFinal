@@ -1,7 +1,34 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-<div class=" scroll row bg-surface-secondary shadow-2" id="container">
+@if (ViewBag.Message != null)  
+    {  
+        <script type="text/javascript">  
+            window.onload = function () {  
+                alert("@ViewBag.Message");  
+            };  
+        </script>  
+    }  
+     <div class="div-filter">
+    <div class="d-flex mb-3 row align-items-center" style="width: 800px">
+        <h3 class="text-center mb-2">Extended Filter</h3>
+        <div class=col-3>
+            <select class = "form-select select-filter" id="filterSelecter" >
+                <option>Age</option>
+                <option>Next Birthday</option>
+            </select>
+        </div>
+        <div class=col-6>
+              <input type="text" class="form-control" id="filterText">
+        </div>
+        <div class=col-3 center-div>
+              <button type="button" class="btn btn-sm btn-success" onclick="filter()">Filter Contacts</button>
+        </div>
+    </div>
+    </div>
+            
+
+<div class=" scroll row bg-surface-secondary shadow-2 card-lists" id="container">
     <div class="d-flex scroll justify-content-center" id="loader">
         <div class="dash uno"></div>
         <div class="dash dos"></div>

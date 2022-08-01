@@ -2331,7 +2331,7 @@ a {
     }
 }
 
-@media(min-width: 992px) {
+@media(min-width: 1200px) {
     .col-lg {
         flex: 1 0 0%
     }

@@ -104,7 +104,6 @@ function getCountries(token) {
             "Authorization": "Bearer " + token,
         }
     }).done(function (data) {
-        console.log(data)
         $("#country option").remove();
         $('country ').append('<option value="">Please a country</option>');
         $.each(data, function () {
